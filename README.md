@@ -1,3 +1,5 @@
+[intorods documentation](https://intorods.readthedocs.io/en/latest/index.html)
+
 # Introduction
 
 intorods is a python tool to import data into irods from a variety of sources.
