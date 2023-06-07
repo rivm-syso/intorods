@@ -1,0 +1,26 @@
+2021-09-16 11:34:09.533557: T1: objects ./input/file1 and ./output/file1 are not equal
+2021-09-16 11:34:09.533653: <class 'filesys.fs_local.fs_local'> :deletefile not implemented in 
+2021-09-16 11:34:09.533702: T1: error deleting ./output/file1
+2021-09-16 11:34:09.543465: T1: objects ./input/file1 and ./output/file1 are not equal
+2021-09-16 11:34:09.543532: <class 'filesys.fs_local.fs_local'> :deletefile not implemented in 
+2021-09-16 11:34:09.543564: T1: error deleting ./output/file1
+2021-09-16 11:34:09.552741: T1: copying of ./input/file1 to ./output/file1 failed
+2021-09-16 11:34:09.554098: T1: Error getting source file ./input/file2.
+2021-09-16 11:34:11.556611: T1: Empty queue: exit
+2021-09-16 11:34:11.556817: T1: Finish
+2021-09-16 11:34:14.518670: Re-queing x
+2021-09-16 11:34:14.519361: Re-queing x
+2021-09-16 11:34:14.519985: QUEUE SIZE :      2 COPYRATE:    0  BYTERATE:  0.00 MB/s  AVG SIZE :     0.00 kB  TIME: 0.00 s  ERRORS :      0
+2021-09-16 11:34:14.520355: A copy process has ended
+2021-09-16 11:34:14.520456: Creating copy process 2
+2021-09-16 11:34:14.531797: T2: objects ./input/file1 and ./output/file1 are not equal
+2021-09-16 11:34:14.532120: <class 'filesys.fs_local.fs_local'> :deletefile not implemented in 
+2021-09-16 11:34:14.532230: T2: error deleting ./output/file1
+2021-09-16 11:34:14.542848: T2: objects ./input/file1 and ./output/file1 are not equal
+2021-09-16 11:34:14.542941: <class 'filesys.fs_local.fs_local'> :deletefile not implemented in 
+2021-09-16 11:34:14.542994: T2: error deleting ./output/file1
+2021-09-16 11:34:14.552940: T2: objects ./input/file1 and ./output/file1 are not equal
+2021-09-16 11:34:14.553014: <class 'filesys.fs_local.fs_local'> :deletefile not implemented in 
+2021-09-16 11:34:14.553046: T2: error deleting ./output/file1
+2021-09-16 11:34:14.561181: T2: copying of ./input/file1 to ./output/file1 failed
+2021-09-16 11:34:14.562934: T2: Error getting source file ./input/file2.

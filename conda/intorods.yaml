@@ -1,0 +1,17 @@
+name: intorods
+channels:
+  - conda-forge
+dependencies:
+  - paramiko
+  - pip
+  - python
+  - pytest
+  - pyyaml
+  - libffi
+  - pip:
+    - python-irodsclient
+    - pysmb
+    - jsonschema
+    - tqdm
+    - intorods
+    - ftputil

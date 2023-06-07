@@ -1,0 +1,7 @@
+build
+pip
+sphinx
+sphinx-argparse
+sphinx-markdown-builder
+sphinx-rtd-theme
+twine

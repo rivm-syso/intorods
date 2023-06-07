@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "collection": {
+      "type": "string"
+    },
+    "checksum_format": {
+      "type": "string",
+      "enum": ["sha256"]
+    },
+    "version": {
+      "type": "integer"
+    },
+    "checksum_encoding": {
+      "type": "string",
+      "enum": [ "hex", "base64" ]
+    },
+    "objects": {
+      "type": "array",
+      "items": {
+         "type": "object",
+         "properties": {
+            "path": {
+              "type": "string"
+            },
+            "checksum": {
+              "type": "string"
+            },
+            "create_time": {
+              "type": "integer"
+            },
+            "type": {
+              "type": "string",
+              "enum": [ "dataobject", "collection" ]
+            },
+            "metadata": {
+              "type": "array",
+              "items": {
+                 "type": "object",
+                 "properties": {
+                    "units": {
+                      "type": "string"
+                    },
+                    "attr": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "units",
+                    "attr",
+                    "value"
+                  ]
+              }  
+            }
+          },
+         "required": [
+            "path",
+            "checksum",
+            "type"
+          ]
+      }
+    }
+  },
+  "required": [
+      "collection",
+      "checksum_format",
+      "version",
+      "checksum_encoding",
+      "objects"
+  ]  
+}

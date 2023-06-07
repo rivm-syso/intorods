@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type" : "object",
+    "required": [ "samples" ],
+    "properties" : {
+        "samples":  {
+            "type": "array", 
+            "uniqueItems": true,
+            "items":{
+                "type": "object",
+                "required": [ "samplename", "order", "flowcellid", "sequencer", "pairs" ],
+                "properties": {
+                    "samplename": { "type" : "string" }, 
+                    "order": { "type" : "string" },
+                    "flowcellid": { "type" : "string" },
+                    "sequencer": { "type" : "string" },
+                    "pairs": { 
+                        "type" : "array",
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 4,
+                        "items":{
+                            "type": "object",
+                            "required": [ "filename", "checksum", "read"],
+                            "properties": {
+                                "read": { "type": "number"},
+                                "path": { "type": "string", "pattern": "^[^ ]*$" },
+                                "filename":{ "type": "string", "pattern": "^[^ ]*$" },
+                                "checksum":{ "type": "string", "pattern": "^[0-9a-f]{64}$" }   
+                            }
+                        } 
+                    }
+                } 
+            } 
+        } 
+    }
+}

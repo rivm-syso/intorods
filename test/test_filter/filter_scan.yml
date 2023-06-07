@@ -1,0 +1,6 @@
+---
+filter:
+  #exclude everything by default
+  - "- /"
+  # do include pdfs in the root
+  - "+ / .*\\.pdf"

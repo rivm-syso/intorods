@@ -1,0 +1,13 @@
+---
+filter:
+  #exclude everything by default
+  - "- /"
+  - "+ / .*"
+#  #only include A (and all subdirs)
+  - "+ A/"
+#  #but dont include A/B2
+  - "- A/B2/"
+#  #additionally do include ONLY B/A2 (and all subdirs)
+  - "+ B/A2/"
+  #and include filed from C2
+  - "+ C/C2/ .*\\.x"

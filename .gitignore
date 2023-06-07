@@ -1,0 +1,12 @@
+dest
+dist
+docs/build
+test_data
+tmp
+__pycache__
+cred*.yml
+*.pyc
+downloaded
+venv
+.vscode
+src/intorods.egg-info/

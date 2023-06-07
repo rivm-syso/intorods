@@ -1,0 +1,8 @@
+---
+filter:
+  #exclude everything by default
+  - "- /"
+  #include log directory
+  - "+ log/"
+  #but not log-post files
+  - "- log/ lok-post.*"

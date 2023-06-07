@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "intorods"
+dynamic = ["version"]
+authors = [
+    { name="Erwin van Wieringen", email="erwin.van.wieringen@rivm.nl" },
+    { name="Robert Verhagen", email="robert.verhagen@rivm.nl" },
+    { name="Jan-Erek Thiede", email="jan.erek.thiede@rivm.nl"}
+]
+description = "Tool to sync data to irods from various sources"
+readme = "docs/build/markdown/introduction.md"
+requires-python = ">=3.7"
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+
+dependencies = [
+    "cryptography",
+    "paramiko",
+    "python-irodsclient",
+    "pyyaml",
+    "pysmb",
+    "jsonschema"
+]
+
+[project.scripts]
+intorods = "intorods.intorods:main"
+
+[project.urls]
+"Homepage" = "https://github.com/rivm-syso/intorods"
+"Bug Tracker" = "https://github.com/rivm-syso/intorods/issues"
+
+[tool.setuptools.dynamic]
+version = {attr = "intorods.__VERSION__"}
