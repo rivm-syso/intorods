@@ -100,7 +100,7 @@ class fs_local(fs_base):
         result = [f.name for f in os.scandir(path) if not f.is_dir()]
         return result
 
-    def mkdir(self, path):
+    def mkdir(self, path, parents=False):
         os.mkdir(path)
 
     def open(self, path, mode):

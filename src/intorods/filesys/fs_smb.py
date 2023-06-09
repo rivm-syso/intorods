@@ -152,7 +152,7 @@ class fs_smb(fs_base):
             result.append(entry.filename)
         return result
 
-    def mkdir(self, path):
+    def mkdir(self, path, parents=False):
         self.smb_conn.createDirectory(self.share, uxtowin(path))
 
 # TODO

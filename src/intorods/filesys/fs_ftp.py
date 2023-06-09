@@ -100,7 +100,7 @@ class fs_ftp(fs_base):
             pass
         return result
 
-    def mkdir(self, path):
+    def mkdir(self, path, parents=False):
         exit(1)
 
     def open(self, path, mode):

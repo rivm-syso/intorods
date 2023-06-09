@@ -126,7 +126,7 @@ class fs_sftp(fs_base):
     def lsfilenames(self, path):
         return self.sftp.listdir(path)
 
-    def mkdir(self, path):
+    def mkdir(self, path, parents=False):
         exit(1)
 
     def open(self, path, mode):
