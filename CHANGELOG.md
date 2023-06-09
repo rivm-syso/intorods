@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- A deletefile method to the fs_local class.
+
 ### Fixed 
 
 - Broken import in ftp filesystem module.

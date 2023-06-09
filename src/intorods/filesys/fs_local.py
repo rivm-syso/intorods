@@ -109,5 +109,8 @@ class fs_local(fs_base):
     def open(self, path, mode):
         return open(path, mode)
 
+    def deletefile(self, path):
+        os.remove(path)
+
 
 factory.register('local', fs_local.factory, '')
