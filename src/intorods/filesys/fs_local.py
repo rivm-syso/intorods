@@ -101,7 +101,10 @@ class fs_local(fs_base):
         return result
 
     def mkdir(self, path, parents=False):
-        os.mkdir(path)
+        if parents:
+            os.makedirs(path)
+        else:
+            os.mkdir(path)
 
     def open(self, path, mode):
         return open(path, mode)
