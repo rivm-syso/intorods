@@ -674,7 +674,7 @@ def main():
                               excludelist=args.exclude,
                               completion_avu=args.completion_avu,
                               compare=not args.no_compare,
-                              info=arg.info,
+                              info=args.info,
                               timestamp_list=timestamp_list,
                               minimum_age=args.last_write,
                               cs_filter_file=args.checksum_filter_file,
