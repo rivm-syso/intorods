@@ -1,5 +1,5 @@
 import unittest
-from yml_filter import PathFilter
+from intorods.filesys.yml_filter import PathFilter
 
 
 class TestYmlFilter(unittest.TestCase):

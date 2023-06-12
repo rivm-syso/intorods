@@ -5,7 +5,7 @@ import sys
 
 sys.path.insert(1, os.path.join(sys.path[0], ".."))
 
-from intorods import formattime, parse_extra_options
+from intorods.intorods import formattime, parse_extra_options
 
 
 @pytest.mark.parametrize("ts, output",[(1,' 0 days  0: 0: 1 '),(1000,' 0 days  0:16:40 '),(100000,' 1 days  3:46:40 '),(10000000,'115 days 17:46:40 ')])

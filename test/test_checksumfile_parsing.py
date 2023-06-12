@@ -4,8 +4,7 @@ import json
 import os, sys, inspect
 sys.path.insert(1, os.path.join(sys.path[0], ".."))
 
-from intorods import BASECLEAR_SCHEMA_FILE, FILE_FORMAT_TEXT, FILE_FORMAT_BASECLEAR
-from intorods import factory, parse_checksum_file
+from intorods.intorods import BASECLEAR_SCHEMA_FILE, FILE_FORMAT_TEXT, FILE_FORMAT_BASECLEAR, factory, parse_checksum_file
 class TestParseChecksumFile(unittest.TestCase):
     def test_simple_text_format(self):
         """
