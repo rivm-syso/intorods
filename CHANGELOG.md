@@ -9,12 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- A deletefile method to the fs_local class.
+- A deletefile method to the fs_local class (#1).
 
 ### Fixed 
 
-- Broken import in ftp filesystem module.
-- The intorods.filesys.sync.sync method uses `<fs>.mkdir(path, parents=True)`, added parents kw to mkdir for all filesystems.
+- Broken import in ftp filesystem module (#1).
+- The intorods.filesys.sync.sync method uses `<fs>.mkdir(path, parents=True)`,
+  added `parents` kwarg to mkdir for all filesystem classes (#1).
 
 ## [0.0.7] - 2023-06-07
 
