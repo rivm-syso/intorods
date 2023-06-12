@@ -7,9 +7,11 @@ SMB class for the filesys library
 import logging
 import socket
 import tempfile
-from smb.SMBConnection import SMBConnection
+
 from smb import smb_constants
-from intorods.filesys.fs_base import factory, fsobject_base, fs_base
+from smb.SMBConnection import SMBConnection
+
+from intorods.filesys.fs_base import factory, fs_base, fsobject_base
 
 logger = logging.getLogger(__name__)
 

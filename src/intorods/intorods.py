@@ -7,27 +7,29 @@ Created on Mon May  6 14:28:12 2019
 """
 
 import argparse
+import hashlib
+import json
 import logging
 import logging.config
-import intorods.filesys.fs_scp
-import intorods.filesys.fs_irods
-import intorods.filesys.fs_local
-import intorods.filesys.fs_sftp
-import intorods.filesys.fs_ftp
-import hashlib
-import irods.exception as ex
-import json
 import os
 import re
 import sys
 import time
+
+import irods.exception as ex
 import yaml
+from jsonschema import ValidationError, validate
+
+import intorods.filesys.fs_ftp
+import intorods.filesys.fs_irods
+import intorods.filesys.fs_local
+import intorods.filesys.fs_scp
+import intorods.filesys.fs_sftp
 
 from .filesys.fs_base import factory
 from .filesys.fs_smb import wintoux
+from .filesys.loghandlers import log_to_stdout, log_to_syslog
 from .filesys.sync import sync
-from .filesys.loghandlers import log_to_syslog, log_to_stdout
-from jsonschema import validate, ValidationError
 
 logger = logging.getLogger(None)
 for _ in ("irods.connection", "irods.manager.metadata_manager", "irods.message", "irods.pool", 

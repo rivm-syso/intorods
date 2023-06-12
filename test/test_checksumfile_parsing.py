@@ -1,10 +1,14 @@
+import inspect
+import json
+import os
+import sys
 import unittest
 
-import json
-import os, sys, inspect
 sys.path.insert(1, os.path.join(sys.path[0], ".."))
 
-from intorods.intorods import BASECLEAR_SCHEMA_FILE, FILE_FORMAT_TEXT, FILE_FORMAT_BASECLEAR, factory, parse_checksum_file
+from intorods.intorods import (BASECLEAR_SCHEMA_FILE, FILE_FORMAT_BASECLEAR,
+                               FILE_FORMAT_TEXT, factory, parse_checksum_file)
+
 
 class TestParseChecksumFile(unittest.TestCase):
     def test_simple_text_format(self):

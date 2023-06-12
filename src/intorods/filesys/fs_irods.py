@@ -7,18 +7,20 @@ Created on Tue May  7 12:14:23 2019
 """
 
 import base64
+import calendar as cal
 import logging
 import math
 import os
 import re
 import ssl
 import time
-import calendar as cal
+
 import irods.keywords as kw
 from irods.column import Criterion
-from irods.session import iRODSSession
 from irods.models import Collection, CollectionMeta, DataObject
-from intorods.filesys.fs_base import factory, fsobject_base, fs_base
+from irods.session import iRODSSession
+
+from intorods.filesys.fs_base import factory, fs_base, fsobject_base
 
 logger = logging.getLogger(__name__)
 

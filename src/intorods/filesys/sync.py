@@ -1,11 +1,12 @@
 import logging
-import time
-import os
-import re
-import multiprocessing as mp
-import queue
-from intorods.filesys.fs_base import factory
 import math
+import multiprocessing as mp
+import os
+import queue
+import re
+import time
+
+from intorods.filesys.fs_base import factory
 from intorods.filesys.yml_filter import PathFilter
 
 # The sync_worker tries to copy each object max MAX_RETRIES times,

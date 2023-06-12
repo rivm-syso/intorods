@@ -3,8 +3,9 @@ import sys
 
 sys.path.insert(1, os.path.join(sys.path[0], ".."))
 
+import filecmp
+
 from intorods.intorods import factory, sync
-import filecmp 
 
 #
 # def sync(sourcefs, sourcepath, destfs, destpath, sfs_name, sfs_opts, dfs_name, dfs_opts,

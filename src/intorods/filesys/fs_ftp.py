@@ -6,11 +6,14 @@ Created on Thu May 25 11:00:00 2023
 @author: jansser
 """
 
-import stat
-import ftputil
-from intorods.filesys.fs_base import factory, fsobject_base, fs_base
 import os
+import stat
 from datetime import datetime
+
+import ftputil
+
+from intorods.filesys.fs_base import factory, fs_base, fsobject_base
+
 
 class file_ftp(fsobject_base):
     def __init__(self, fso, path):

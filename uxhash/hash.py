@@ -13,8 +13,8 @@ import logging.config
 import os
 import sys
 import time
-from multiprocessing import Pool
 from datetime import datetime
+from multiprocessing import Pool
 
 BUF_SIZE = 1024 * 1024
 

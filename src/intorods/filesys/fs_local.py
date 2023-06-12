@@ -7,10 +7,10 @@ Created on Wed May  8 10:25:59 2019
 """
 
 import glob
-import os
 import math
+import os
 
-from intorods.filesys.fs_base import factory, fsobject_base, fs_base
+from intorods.filesys.fs_base import factory, fs_base, fsobject_base
 
 
 class file_local(fsobject_base):

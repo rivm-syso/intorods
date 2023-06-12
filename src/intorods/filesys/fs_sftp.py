@@ -6,17 +6,20 @@ Created on Wed Jun 19 16:08:06 2019
 @author: Erwin van Wieringen
 """
 
-import os
 import glob
+import hashlib
+import os
 import re
 import stat
-import hashlib
 import warnings
+
 from cryptography.utils import CryptographyDeprecationWarning
+
 with warnings.catch_warnings():
     warnings.filterwarnings('ignore', category=CryptographyDeprecationWarning)
     import paramiko
-from intorods.filesys.fs_base import factory, fsobject_base, fs_base, fopen
+
+from intorods.filesys.fs_base import factory, fopen, fs_base, fsobject_base
 
 
 def esc(mystr):

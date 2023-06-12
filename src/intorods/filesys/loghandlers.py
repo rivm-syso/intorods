@@ -1,7 +1,6 @@
 import logging
 import logging.handlers
 import sys
-
 from logging.handlers import SysLogHandler
 
 LOG_FORMAT_FILE = "%(asctime)s|%(name)s %(levelname)s: %(message)s"
