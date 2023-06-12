@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Pytest to correctly run from base directory by changing location of test
   files in test scripts (#2).
+- Moved checksum tools from uxhash to the package and added them as CLI tool (#3).
 
 ### Fixed 
 
