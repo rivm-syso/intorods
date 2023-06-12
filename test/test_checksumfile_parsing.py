@@ -5,6 +5,7 @@ import os, sys, inspect
 sys.path.insert(1, os.path.join(sys.path[0], ".."))
 
 from intorods.intorods import BASECLEAR_SCHEMA_FILE, FILE_FORMAT_TEXT, FILE_FORMAT_BASECLEAR, factory, parse_checksum_file
+
 class TestParseChecksumFile(unittest.TestCase):
     def test_simple_text_format(self):
         """
@@ -12,7 +13,7 @@ class TestParseChecksumFile(unittest.TestCase):
         """
         fs_source = factory.createfs( "local" )
         result = parse_checksum_file( fs_source,
-                                      fs_source.getfile("./data"),
+                                      fs_source.getfile("./test/data"),
                                       "text_checksumfile1",
                                       FILE_FORMAT_TEXT, 
                                       None )
@@ -27,10 +28,10 @@ class TestParseChecksumFile(unittest.TestCase):
         """
         fs_source = factory.createfs( "local" )
         JSON_SCHEMA=None
-        with open( os.path.join("..",BASECLEAR_SCHEMA_FILE )) as f:
+        with open( BASECLEAR_SCHEMA_FILE) as f:
             JSON_SCHEMA = json.load(f)
         result = parse_checksum_file( fs_source,
-                                      fs_source.getfile("./data"),
+                                      fs_source.getfile("./test/data"),
                                       "json_checksumfile1.json",
                                       FILE_FORMAT_BASECLEAR, 
                                       JSON_SCHEMA )
@@ -45,10 +46,10 @@ class TestParseChecksumFile(unittest.TestCase):
         """
         fs_source = factory.createfs( "local" )
         JSON_SCHEMA=None
-        with open( os.path.join("..",BASECLEAR_SCHEMA_FILE )) as f:
+        with open( BASECLEAR_SCHEMA_FILE) as f:
             JSON_SCHEMA = json.load(f)
         result = parse_checksum_file( fs_source,
-                                      fs_source.getfile("./data"),
+                                      fs_source.getfile("./test/data"),
                                       "json_checksumfile2.json",
                                       FILE_FORMAT_BASECLEAR, 
                                       JSON_SCHEMA )
@@ -63,10 +64,10 @@ class TestParseChecksumFile(unittest.TestCase):
         """
         fs_source = factory.createfs( "local" )
         JSON_SCHEMA=None
-        with open( os.path.join("..",BASECLEAR_SCHEMA_FILE )) as f:
+        with open( BASECLEAR_SCHEMA_FILE) as f:
             JSON_SCHEMA = json.load(f)
         result = parse_checksum_file( fs_source,
-                                      fs_source.getfile("./data"),
+                                      fs_source.getfile("./test/data"),
                                       "json_checksumfile3.json",
                                       FILE_FORMAT_BASECLEAR, 
                                       JSON_SCHEMA )
@@ -79,10 +80,10 @@ class TestParseChecksumFile(unittest.TestCase):
         """
         fs_source = factory.createfs( "local" )
         JSON_SCHEMA=None
-        with open( os.path.join("..",BASECLEAR_SCHEMA_FILE )) as f:
+        with open( BASECLEAR_SCHEMA_FILE) as f:
             JSON_SCHEMA = json.load(f)
         result = parse_checksum_file( fs_source,
-                                      fs_source.getfile("./data"),
+                                      fs_source.getfile("./test/data"),
                                       "json_*file2.json",
                                       FILE_FORMAT_BASECLEAR, 
                                       JSON_SCHEMA )

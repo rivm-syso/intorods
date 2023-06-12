@@ -119,6 +119,7 @@ class TestYmlFilter(unittest.TestCase):
         self.assertEqual( f, True, "")
         
     def test_root_files(self):
+        filter = [] # TODO fill in the correct filter for this test
         pf = PathFilter( filter )
         pf.show()
         f = pf.isFileIncluded( "file.txt")
