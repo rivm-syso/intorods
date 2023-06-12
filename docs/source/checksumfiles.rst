@@ -55,10 +55,11 @@ Creating checksum files
 
   find . -type f -exec sha256sum {} 
 
-* In the **uxhash** directory of the distribution, there is a utility **hash.py** that can create checksumfiles. For example:
+* In the **uxhash** directory of the distribution, there is a utility **hash.py** that can create checksumfiles.
+This has also been implemented as a command line tool `intorods-checksum` in this package. For example:
 
 .. code-block:: console
 
-    python hash.py -o checksums.txt .
+    intorods-checksum -o checksums.txt .
 
 * On windows you can use something like `sha256deep.exe <https://md5deep.sourceforge.net/>`_.
