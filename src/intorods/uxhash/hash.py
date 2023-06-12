@@ -7,6 +7,7 @@ Created on Wed Jan  8 11:38:22 2020
 """
 
 import argparse
+import json
 import hashlib
 import logging
 import logging.config
@@ -66,6 +67,31 @@ def loglevel_convert(level):
     LEVELS = dict(enumerate([logging.CRITICAL, logging.ERROR, logging.WARNING, logging.INFO, logging.DEBUG]))
     return LEVELS.get(level-1, logging.WARNING)
 
+def hash_dict_to_json(hashdict, collection=""):
+    objects = []
+    for path, hash in hashdict.items():
+        file_json = {
+            "path": path,
+            "checksum": hash,
+            "type": "dataobject"
+        }
+        objects.append(file_json)
+
+    result_json = {
+        "collection": collection,
+        "checksum_format": "sha256",
+        "version": 1,
+        "checksum_encoding": "hex",
+        "objects": objects
+    }
+    return json.dumps(result_json, indent=3)
+
+def hash_dict_to_txt(hashdict):
+    output = ""
+    for path, hash in hashdict.items():
+        output += "{}  {}\n".format(hash, path)
+    return output
+
 def main():
     """
     Main function shows usage
@@ -74,8 +100,11 @@ def main():
     parser = argparse.ArgumentParser(description='Hash file generator')
     parser.add_argument('sourcedir', help='Source directory')
     parser.add_argument('-o', '--output', help='Output file')
+    parser.add_argument('-j', '--json', help='Output in json format', action='store_true')
     parser.add_argument('-p', '--procs', help='Hash processes', type=int, default=1)
     parser.add_argument('-d', '--debuglevel', help='Debug level (1-5)', type=int, default=logging.CRITICAL)
+    parser.add_argument('-C', '--coll', help='destination collection for use in json output', default='')
+
 
     args = parser.parse_args()
 
@@ -87,14 +116,18 @@ def main():
     
     hashtime = time.time() - t0
 
+    
+    output = ""
+    if args.json:
+        output = hash_dict_to_json(hashes, collection=args.coll)
+    else:
+        output = hash_dict_to_txt(hashes)
+
     if args.output:
         hashfile = open(args.output, 'w')
     else:
         hashfile = sys.stdout
-        
-    for hash in hashes:
-        hashfile.write("{}  {}\n".format(hashes[hash], hash))
-        
+    hashfile.write(output)
     hashfile.close
 
     logging.info(f'Hashed {len(hashes)} files in {hashtime:.2f} seconds')
