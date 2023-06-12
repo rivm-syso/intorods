@@ -20,6 +20,7 @@ classifiers = [
 
 dependencies = [
     "cryptography",
+    "ftputil",
     "paramiko",
     "python-irodsclient",
     "pyyaml",
