@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - A deletefile method to the fs_local class (#1).
+- Dependency ftputil to the project settings (#1).
 
 ### Fixed 
 
