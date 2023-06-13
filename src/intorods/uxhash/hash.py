@@ -92,11 +92,7 @@ def hash_dict_to_txt(hashdict):
         output += "{}  {}\n".format(hash, path)
     return output
 
-def main():
-    """
-    Main function shows usage
-    """
-
+def cmd_parser():
     parser = argparse.ArgumentParser(description='Hash file generator')
     parser.add_argument('sourcedir', help='Source directory')
     parser.add_argument('-o', '--output', help='Output file')
@@ -105,8 +101,14 @@ def main():
     parser.add_argument('-d', '--debuglevel', help='Debug level (1-5)', type=int, default=logging.CRITICAL)
     parser.add_argument('-C', '--coll', help='destination collection for use in json output', default='')
 
+    return parser.parse_args()
 
-    args = parser.parse_args()
+def main():
+    """
+    Main function shows usage
+    """
+
+    args = cmd_parser()
 
     logging.basicConfig(format=log_format, level=loglevel_convert(args.debuglevel))
 
