@@ -115,6 +115,9 @@ def main():
     t0 = time.time()
 
     hashes = create_hash(args.sourcedir, procs=args.procs)
+
+    if args.output is not None:
+        hashes.pop(args.output, None)
     
     hashtime = time.time() - t0
 
