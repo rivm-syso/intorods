@@ -7,9 +7,10 @@ SMB class for the filesys library
 import logging
 import socket
 import tempfile
+import os
 
-from smb import smb_constants
 from smb.SMBConnection import SMBConnection
+from smb import smb_constants
 
 from intorods.filesys.fs_base import factory, fs_base, fsobject_base
 
@@ -155,6 +156,10 @@ class fs_smb(fs_base):
         return result
 
     def mkdir(self, path, parents=False):
+        if parents:
+            parentdir, dir = os.path.split(path)
+            if not self.folderexists(parentdir):
+                self.mkdir(parentdir, parents=True)
         self.smb_conn.createDirectory(self.share, uxtowin(path))
 
 # TODO
