@@ -30,6 +30,7 @@ dependencies = [
 
 [project.scripts]
 intorods = "intorods.intorods:main"
+intorods-checksum = "intorods.uxhash.hash:main"
 
 [project.urls]
 "Homepage" = "https://github.com/rivm-syso/intorods"

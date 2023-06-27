@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - A deletefile method to the fs_local class (#1).
 - Github test workflow (#2).
+- uxhash as part of the package, with command line interface (#3).
 
 ### Changed
 
