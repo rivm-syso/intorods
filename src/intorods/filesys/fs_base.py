@@ -233,7 +233,7 @@ class fs_base(ABC):
         return self.getfile(path)
 
     @abstractmethod
-    def mkdir(self, path):
+    def mkdir(self, path, parents=False):
         pass
 
     def createfile(self, path):

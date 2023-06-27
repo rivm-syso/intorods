@@ -100,11 +100,17 @@ class fs_local(fs_base):
         result = [f.name for f in os.scandir(path) if not f.is_dir()]
         return result
 
-    def mkdir(self, path):
-        os.mkdir(path)
+    def mkdir(self, path, parents=False):
+        if parents:
+            os.makedirs(path)
+        else:
+            os.mkdir(path)
 
     def open(self, path, mode):
         return open(path, mode)
+
+    def deletefile(self, path):
+        os.remove(path)
 
 
 factory.register('local', fs_local.factory, '')

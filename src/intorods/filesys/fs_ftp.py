@@ -8,7 +8,7 @@ Created on Thu May 25 11:00:00 2023
 
 import stat
 import ftputil
-from filesys.fs_base import factory, fsobject_base, fs_base
+from intorods.filesys.fs_base import factory, fsobject_base, fs_base
 import os
 from datetime import datetime
 
@@ -100,7 +100,7 @@ class fs_ftp(fs_base):
             pass
         return result
 
-    def mkdir(self, path):
+    def mkdir(self, path, parents=False):
         exit(1)
 
     def open(self, path, mode):

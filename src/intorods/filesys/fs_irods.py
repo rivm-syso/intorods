@@ -203,7 +203,7 @@ class fs_irods(fs_base):
         if parents:
             parentdir, dir = os.path.split(path)
             if not self.folderexists(parentdir):
-                self.mkdir(parentdir, True)
+                self.mkdir(parentdir, parents=True)
         self.irods_session.collections.create(path)
         return folder_irods(self, path)
 
