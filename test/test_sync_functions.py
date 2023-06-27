@@ -3,8 +3,9 @@ import sys
 
 sys.path.insert(1, os.path.join(sys.path[0], ".."))
 
-from intorods import factory, sync
-import filecmp 
+import filecmp
+
+from intorods.intorods import factory, sync
 
 #
 # def sync(sourcefs, sourcepath, destfs, destpath, sfs_name, sfs_opts, dfs_name, dfs_opts,
@@ -12,11 +13,11 @@ import filecmp
 #         compare=True, minimum_age=0, cs_filters=[], scan_filters=[]):
 # 
 
-inputpath = './input'
+inputpath = './test/input'
 
 
 def test_sync_list():
-    outputpath = './output1'
+    outputpath = './test/output1'
     fs_source = factory.createfs( 'local' )
     fs_dest = factory.createfs('local')
     if not fs_dest.folderexists(outputpath):
@@ -40,7 +41,7 @@ def test_sync_list():
     assert filecmp.cmp(os.path.join(inputpath, 'file2'), os.path.join(outputpath, 'file2'), shallow=False) == True
 
 def test_sync_scan():
-    outputpath = './output2'
+    outputpath = './test/output2'
     fs_source = factory.createfs( 'local' )
     fs_dest = factory.createfs('local')
     if not fs_dest.folderexists(outputpath):

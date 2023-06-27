@@ -4,15 +4,13 @@ Created on Mon May  6 14:28:12 2019
 Purpose: abstract filesystem base class
 """
 
-import logging
-from abc import ABC
-from abc import abstractmethod
-import hashlib
-from datetime import datetime
-import shutil
-import os
 import fnmatch
-
+import hashlib
+import logging
+import os
+import shutil
+from abc import ABC, abstractmethod
+from datetime import datetime
 
 BUF_SIZE = 1024 * 1024 * 4
 

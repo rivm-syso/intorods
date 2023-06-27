@@ -10,7 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - A deletefile method to the fs_local class (#1).
+- Github test workflow (#2).
+
+### Changed
+
 - Dependency ftputil to the project settings (#1).
+- Pytest to correctly run from base directory by changing location of test
+  files in test scripts (#2).
 
 ### Fixed 
 

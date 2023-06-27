@@ -1,22 +1,24 @@
 #!/usr/bin/env python3
 
 import argparse
-import yaml
-import irods.exception as ex
-from irods.session import iRODSSession
-from irods.meta import iRODSMeta
-from irods.models import DataObject, DataObjectMeta, Collection
-from irods.column import Criterion, In
 import logging
-import time
+import multiprocessing as mp
 import os
 import ssl
-from intorods.filesys.fs_base import factory
+import time
+from pathlib import Path
+
 import filesys.fs_irods
 import filesys.fs_local
+import irods.exception as ex
+import yaml
+from irods.column import Criterion, In
+from irods.meta import iRODSMeta
+from irods.models import Collection, DataObject, DataObjectMeta
+from irods.session import iRODSSession
 from tqdm import tqdm
-import multiprocessing as mp
-from pathlib import Path
+
+from intorods.filesys.fs_base import factory
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

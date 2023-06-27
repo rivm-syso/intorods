@@ -1,6 +1,6 @@
+import json
 import os
 import re
-import json
 
 
 # returns number of non-empty path components
