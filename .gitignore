@@ -10,3 +10,4 @@ downloaded
 venv
 .vscode
 src/intorods.egg-info/
+build/
