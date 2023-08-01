@@ -6,22 +6,15 @@ on:
       - release
 
 jobs:
-  build-n-publish:
+  build:
     name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
     runs-on: ubuntu-latest
-    # Specifying a GitHub environment is optional, but strongly encouraged
-    environment: release
-    permissions:
-      # IMPORTANT: this permission is mandatory for trusted publishing
-      id-token: write
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: "3.x"
-
     - name: Install pypa/build
       run: >-
         python3 -m
@@ -36,12 +29,48 @@ jobs:
         --wheel
         --outdir dist/
         .
+    - name: 'Upload dist folder as artifact'
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist
+        path: dist/
+        retention-days: 1
 
-    - name: Publish distribution 📦 to Test PyPI
+  pypi-publish-test:
+    name: Publish distribution 📦 to Test PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    # Specifying a GitHub environment is optional, but strongly encouraged
+    environment: testpypi
+    permissions:
+      # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write
+    steps:
+    - name: Download dist artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: dist
+    - name: publish
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         repository-url: https://test.pypi.org/legacy/
-    - name: Publish distribution 📦 to PyPI
+
+
+  pypi-publish:
+    name: Publish distribution 📦 to PyPI
+    needs: [build, pypi-publish-test]
+    runs-on: ubuntu-latest
+    # Specifying a GitHub environment is optional, but strongly encouraged
+    environment: release
+    permissions:
+      # IMPORTANT: this permission is mandatory for trusted publishing
+      id-token: write
+    steps:
+    - name: Download dist artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: dist
+    - name: publish
       uses: pypa/gh-action-pypi-publish@release/v1
       # if: github.ref == 'refs/heads/release' # run this job only for the release branch
       with:
