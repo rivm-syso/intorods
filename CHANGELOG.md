@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Broken import in ftp filesystem module (#1).
 - The intorods.filesys.sync.sync method uses `<fs>.mkdir(path, parents=True)`,
   added `parents` kwarg to mkdir for all filesystem classes (#1).
+- Filesize for ftp now directly instead of via lstat, as that gave strange results (#5).
 
 ## [0.0.7] - 2023-06-07
 
