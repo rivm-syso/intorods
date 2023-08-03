@@ -21,7 +21,7 @@ class file_ftp(fsobject_base):
         self._lstat = self.fso.ftp.lstat(self.path)
 
     def filesize(self):
-        return self._lstat.st_size
+        return self.fso.ftp.path.getsize(self.path)
 
     def isfile(self):
         return not stat.S_ISDIR(self._lstat.st_mode)
