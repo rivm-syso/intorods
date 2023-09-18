@@ -57,6 +57,7 @@ git checkout release
 git merge main
 git tag [version number]
 git push
+git push --tags
 ```
 
 A github action that releases on pypi will run with every push to the release branch.
