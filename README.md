@@ -47,9 +47,9 @@ $ conda activate intorods
 
 ## Release
 
-To release a new version of intorods on pypi, first set new version number in master branch:
- - CHANGELOG.md
- - src/intorods/__init__.py
+To release a new version of intorods on pypi, first set new version number in main branch:
+ - `CHANGELOG.md`
+ - `src/intorods/__init__.py`
 
 Then release the current version by running the following git commands:
 ```
