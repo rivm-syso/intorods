@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.11] - 2023-09-19
+
+### Fixed
+
+- Search option argument removed since it was not required and not documented
+- Fixed example scripts
+
 ## [0.0.10] - 2023-09-18
 
 ### Fixed

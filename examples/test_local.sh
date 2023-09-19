@@ -7,8 +7,8 @@ source activate intorods
 
 intorods -s local --search \
         -c checksums.wrong \
-        -x -R computeResc -m type=tgsdata,source=minion,tools=intorods -q TEST- -t 8 \
-        -F "source_folder"  -S ./test_deadlock /${ZONE}/home/rods/JTH_test_deadlock_2
+        -x -R computeResc -m type=tgsdata -m source=minion -m tools=intorods -t 8 \
+        -S ./test_deadlock /${ZONE}/home/rods/JTH_test_deadlock_2
 
 
 source deactivate
