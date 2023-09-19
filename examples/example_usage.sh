@@ -4,8 +4,8 @@
 
 source activate intorods
 
-intorods -s local --search /home/user/data -C /demoZone/home/rods/dest \
+intorods -s local --search \
         -x -R demoResc -m type=ngsdata,source=ftpserver,tools=intorods -q WGSTB- -S \
-        -t 4 -n 0
+        -t 4 -n 0 /home/user/data /demoZone/home/rods/dest
 
 source deactivate

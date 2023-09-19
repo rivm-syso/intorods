@@ -576,8 +576,8 @@ def main():
     parser.add_argument('-S', '--ssl', help='Use SSL', action="store_true")
 
     # Source selection
-    parser.add_argument('--search', help='Search for directories under this base path',
-                        dest='search_directory', default=None)
+    parser.add_argument('--search', help='Search for directories under the supplied path',
+                        action="store_true")
     parser.add_argument('-n', '--skip_subdirs',
                         help='Skip this number of subdirectories while searching for source directories', type=int, default=0)
     parser.add_argument('-P', '--folder_pattern',
@@ -634,7 +634,7 @@ def main():
 
     args = parser.parse_args()
 
-    assert args.source_path or args.search_directory, "Source path is required"
+    assert args.source_path, "Source path is required"
     assert args.coll, "Destination collection is required"
 
     loglevel = loglevel_convert(args.debuglevel)
@@ -659,9 +659,9 @@ def main():
     # This ensures backward compatibility
     scan = True if not args.checksum_file else args.scan
 
-    if args.search_directory:
+    if args.search:
         replicate_data_folder(args.source_fs, source_options, 'irods', dest_options,
-                              args.search_directory, args.coll,
+                              args.source_path, args.coll,
                               compareChecksums=args.verify_checksums,
                               minage=args.minage, maxage=args.maxage,
                               flagfile=args.flag_filename,
@@ -676,7 +676,6 @@ def main():
                               excludelist=args.exclude,
                               completion_avu=args.completion_avu,
                               compare=not args.no_compare,
-                              info=args.info,
                               timestamp_list=timestamp_list,
                               minimum_age=args.last_write,
                               cs_filter_file=args.checksum_filter_file,
