@@ -546,7 +546,7 @@ def loglevel_convert(level):
 def main():
     """
     Main function shows usage
-    options used: -A -a -C -c -cf -cs -d -F -f -g -G -i -k -l -m -n -O -o -P -p -q -R -S -s -T -t -X -x -z
+    options used: -A -a -C -c -cf -cs -d -F -f -g -G -i -k -l -m -M -n -O -o -P -p -q -R -S -s -T -t -X -x -z
     """
 
     pre = argparse.ArgumentParser(add_help=False)
@@ -614,6 +614,8 @@ def main():
     # Metadata options
     parser.add_argument(
         '-m', '--metadata', help='Metadata to add to destination collection', default=[], action='append')
+    parser.add_argument(
+        '-M', '--metadata-file', help='JSON file with metadata to add to destination collection', default=None)
     parser.add_argument('-O', '--completion_avu',
                         help='Metadata attr=value to check for to skip folders', default=None)
 
@@ -647,7 +649,18 @@ def main():
         __name__, args.data_source_name))
 
     source_options = parse_extra_options(args.source_options)
-    metadata = dict(m.split('=') for m in args.metadata)
+
+    metadata = {} 
+    if args.metadata_file:
+        fs_source = factory.createfs(args.source_fs, **source_options)
+        metadata_file = fs_source.getfile(args.metadata_file)
+        if not metadata_file.accessible():
+            logger.error('metadata-file %s is not accessible' % args.metadata_file)
+            exit( 1 )
+        with metadata_file.open('r') as fh:
+            metadata_file_content = json.load(fh)
+            metadata.update(metadata_file_content)
+    metadata.update(dict(m.split('=') for m in args.metadata))
 
     dest_options = parse_extra_options(args.irods_options)
     dest_options.update({'resource': args.resource, 'use_ssl': args.ssl})
