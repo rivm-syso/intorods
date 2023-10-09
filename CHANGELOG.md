@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.12] - 2023-10-09
+
+### Added
+
+- option -M to specify a JSON file with metadata as an alternative to the -m key=value argument.
+
 ## [0.0.11] - 2023-09-19
 
 ### Fixed
