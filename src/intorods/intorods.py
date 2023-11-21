@@ -81,7 +81,7 @@ def parse_extra_options(options):
     return outp
 
 
-def parse_checksum_file(fs_source, folder, checksumfile, file_format, json_schema):
+def parse_checksum_file(fs_source, folder, checksumfile, file_format, sourcepath, json_schema):
     """
         returns a dictionary, containing complete/path/to/file --> hash-value
         returns None to indicate to caller the checksumfile is missing / invalid, either abort or continue with next folder...
@@ -105,7 +105,9 @@ def parse_checksum_file(fs_source, folder, checksumfile, file_format, json_schem
         return None
     #put also the samplesheet itself into the cslist for synchronization
     csf_name = os.path.basename(checksumfilepath)
-    cslist[wintoux(csf_name)] = None
+    #make check if the checksum file is in the source dir
+    if os.path.exists(os.path.join(sourcepath, csf_name)):
+        cslist[wintoux(csf_name)] = None
     #depending on file format, change behavior....
     if file_format == FILE_FORMAT_TEXT:
         with csfile.open('r') as fh:
@@ -376,8 +378,9 @@ def replicate_data_folder(sfs_name, sfs_opts, dfs_name, dfs_opts,
 
         cslist = {}
         if checksumfile:
+            checksumfile = os.path.join(os.getcwd(), checksumfile)
             cslist = parse_checksum_file(
-                fs_source, folder, checksumfile, checksumfileformat, JSON_SCHEMA)
+                fs_source, folder, checksumfile, checksumfileformat, sourcepath, JSON_SCHEMA)
             if not cslist:
                 continue
 
@@ -500,8 +503,9 @@ def replicate_single_folder(sfs_name, sfs_opts, dfs_name, dfs_opts,
 
     cslist = {}
     if checksumfile:
+        checksumfile = os.path.join(os.getcwd(), checksumfile)
         cslist = parse_checksum_file(
-            fs_source, folder, checksumfile, checksumfileformat, JSON_SCHEMA)
+            fs_source, folder, checksumfile, checksumfileformat, sourcepath, JSON_SCHEMA)
         if not cslist:
             logger.error('Given checksum file is empty')
             sys.exit(0)
