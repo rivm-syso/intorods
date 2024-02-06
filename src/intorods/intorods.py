@@ -81,15 +81,14 @@ def parse_extra_options(options):
     return outp
 
 
-def parse_checksum_file(fs_source, folder, checksumfile, file_format, sourcepath, json_schema):
+def parse_checksum_file(fs_source, folder, checksumfile, file_format, json_schema):
     """
         returns a dictionary, containing complete/path/to/file --> hash-value
         returns None to indicate to caller the checksumfile is missing / invalid, either abort or continue with next folder...
     """
     cslist = {}
     logger.debug('Searching checksums-file %s' % checksumfile)
-    checksumfilepattern = os.path.join(folder.path, checksumfile)
-    csfile_list = fs_source.glob(checksumfilepattern)
+    csfile_list = fs_source.glob(checksumfile)
     if not 1 == len(csfile_list):
         logger.debug('No definitive match of checksumfile found. Pattern: {} in folder: {}, matches: {}'.format(
             checksumfile, folder.path, len(csfile_list)))
@@ -104,10 +103,12 @@ def parse_checksum_file(fs_source, folder, checksumfile, file_format, sourcepath
         logger.error('Checksumfile %s is not accessible' % checksumfilepath)
         return None
     #put also the samplesheet itself into the cslist for synchronization
-    csf_name = os.path.basename(checksumfilepath)
+    rel_csfile_name = os.path.relpath(checksumfilepath, start=folder.path)
     #make check if the checksum file is in the source dir
-    if os.path.exists(os.path.join(sourcepath, csf_name)):
-        cslist[wintoux(csf_name)] = None
+    # input: /dir1/dir2
+    # checksumfile /dir1/dir2/subdir/checksums
+    if not rel_csfile_name.startswith('..'):
+        cslist[wintoux(rel_csfile_name)] = None
     #depending on file format, change behavior....
     if file_format == FILE_FORMAT_TEXT:
         with csfile.open('r') as fh:
@@ -380,7 +381,7 @@ def replicate_data_folder(sfs_name, sfs_opts, dfs_name, dfs_opts,
         if checksumfile:
             checksumfile = os.path.join(os.getcwd(), checksumfile)
             cslist = parse_checksum_file(
-                fs_source, folder, checksumfile, checksumfileformat, sourcepath, JSON_SCHEMA)
+                fs_source, folder, checksumfile, checksumfileformat, JSON_SCHEMA)
             if not cslist:
                 continue
 
@@ -505,7 +506,7 @@ def replicate_single_folder(sfs_name, sfs_opts, dfs_name, dfs_opts,
     if checksumfile:
         checksumfile = os.path.join(os.getcwd(), checksumfile)
         cslist = parse_checksum_file(
-            fs_source, folder, checksumfile, checksumfileformat, sourcepath, JSON_SCHEMA)
+            fs_source, folder, checksumfile, checksumfileformat, JSON_SCHEMA)
         if not cslist:
             logger.error('Given checksum file is empty')
             sys.exit(0)
@@ -676,6 +677,14 @@ def main():
     # This ensures backward compatibility
     scan = True if not args.checksum_file else args.scan
 
+    if args.checksum_file:
+        if args.checksum_file.startswith('/'):
+            checksumfile = args.checksum_file
+        else:
+            checksumfile = os.path.join(args.source_path, args.checksum_file)
+    else:
+        checksumfile = None
+
     if args.search:
         replicate_data_folder(args.source_fs, source_options, 'irods', dest_options,
                               args.source_path, args.coll,
@@ -683,7 +692,7 @@ def main():
                               minage=args.minage, maxage=args.maxage,
                               flagfile=args.flag_filename,
                               flag_age=args.flag_age,
-                              checksumfile=args.checksum_file,
+                              checksumfile=checksumfile,
                               checksumfileformat=args.checksum_file_format,
                               checksumfileschema=args.checksum_file_schema,
                               pattern=args.folder_pattern,
