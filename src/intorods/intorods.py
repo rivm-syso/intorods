@@ -81,11 +81,16 @@ def parse_extra_options(options):
     return outp
 
 
-def parse_checksum_file(fs_source, folder, checksumfile, file_format, json_schema):
+def parse_checksum_file(fs_source, folder, abs_or_rel_checksumfile, file_format, json_schema):
     """
         returns a dictionary, containing complete/path/to/file --> hash-value
         returns None to indicate to caller the checksumfile is missing / invalid, either abort or continue with next folder...
+        
     """
+    if not abs_or_rel_checksumfile.startswith('/'):
+        checksumfile = os.path.join(folder.path, abs_or_rel_checksumfile)
+    else:
+        checksumfile = abs_or_rel_checksumfile
     cslist = {}
     logger.debug('Searching checksums-file %s' % checksumfile)
     csfile_list = fs_source.glob(checksumfile)
@@ -271,7 +276,7 @@ def replicate_data_folder(sfs_name, sfs_opts, dfs_name, dfs_opts,
 
         == Source selection parameters ==
         checksumfile: File path on source with checksums for all files
-            under <sourcepath>. Wildcards are allowed.
+            Wildcards are allowed.
         checksumfileformat: Format of checksum file, either:
             text: one line per file, consisting of cheksum and filename
             json: structured file following the jsonschema defined.
@@ -379,7 +384,6 @@ def replicate_data_folder(sfs_name, sfs_opts, dfs_name, dfs_opts,
 
         cslist = {}
         if checksumfile:
-            checksumfile = os.path.join(os.getcwd(), checksumfile)
             cslist = parse_checksum_file(
                 fs_source, folder, checksumfile, checksumfileformat, JSON_SCHEMA)
             if not cslist:
@@ -504,7 +508,6 @@ def replicate_single_folder(sfs_name, sfs_opts, dfs_name, dfs_opts,
 
     cslist = {}
     if checksumfile:
-        checksumfile = os.path.join(os.getcwd(), checksumfile)
         cslist = parse_checksum_file(
             fs_source, folder, checksumfile, checksumfileformat, JSON_SCHEMA)
         if not cslist:
@@ -677,14 +680,6 @@ def main():
     # This ensures backward compatibility
     scan = True if not args.checksum_file else args.scan
 
-    if args.checksum_file:
-        if args.checksum_file.startswith('/'):
-            checksumfile = args.checksum_file
-        else:
-            checksumfile = os.path.join(args.source_path, args.checksum_file)
-    else:
-        checksumfile = None
-
     if args.search:
         replicate_data_folder(args.source_fs, source_options, 'irods', dest_options,
                               args.source_path, args.coll,
@@ -692,7 +687,7 @@ def main():
                               minage=args.minage, maxage=args.maxage,
                               flagfile=args.flag_filename,
                               flag_age=args.flag_age,
-                              checksumfile=checksumfile,
+                              checksumfile=args.checksumfile,
                               checksumfileformat=args.checksum_file_format,
                               checksumfileschema=args.checksum_file_schema,
                               pattern=args.folder_pattern,
