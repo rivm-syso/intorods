@@ -6,5 +6,4 @@ run_unittests:
     - pip install pytest pytest-mock mock
   script:
     - source activate intorods
-    - cd test
-    - pytest .
+    - pytest test
