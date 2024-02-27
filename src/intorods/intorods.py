@@ -679,15 +679,18 @@ def main():
     # Using scan defaults to True if no filelist is specified.
     # This ensures backward compatibility
     scan = True if not args.checksum_file else args.scan
-
     if args.search:
+        # Check the checksumfile parameter. It cannot be an absolute path
+        if args.checksum_file and args.checksum_file.startswith('/'):
+            logger.error('Chksum file path cannot be an absolute path when --search parameter is supplied')
+            sys.exit(1)
         replicate_data_folder(args.source_fs, source_options, 'irods', dest_options,
                               args.source_path, args.coll,
                               compareChecksums=args.verify_checksums,
                               minage=args.minage, maxage=args.maxage,
                               flagfile=args.flag_filename,
                               flag_age=args.flag_age,
-                              checksumfile=args.checksumfile,
+                              checksumfile=args.checksum_file,
                               checksumfileformat=args.checksum_file_format,
                               checksumfileschema=args.checksum_file_schema,
                               pattern=args.folder_pattern,

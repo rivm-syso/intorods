@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.13] - 2024-02-06
 
-- Correctly process a checksumfiel when it is not in the source directory
+- Correctly process a checksumfile when it is not in the source directory
 
 ## [0.0.12] - 2023-10-09
 

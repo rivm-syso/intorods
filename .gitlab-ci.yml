@@ -1,8 +1,9 @@
 run_unittests:
   image: continuumio/miniconda3
   before_script:
-#    - pip install pytest mock pytest-mock paramiko
     - conda env create -f conda/intorods.yaml
+    - source activate intorods
+    - pip install pytest pytest-mock mock
   script:
     - source activate intorods
     - cd test

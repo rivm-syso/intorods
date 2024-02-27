@@ -20,7 +20,12 @@ The format of the file is as follows:
 
 The hash is a sha256 has that can be calculated using **sha256sum**. 
 
-The checksumfile is assumed to be in the source directory, so the supplied path is relative to the source directory.
+Checksum file parameter
+----------------------
+
+The checksumfile path is handled differently depending on the presence of the search parameter.
+* When **search** is supplied, the checksum file path is supposed to be relative to the replicated source directory.
+* When **search** is not supplied, the checksum file path is handled as an absolute path, or a path relative to the working directory.
 
 Creating checksums in iRODS
 ---------------------------
