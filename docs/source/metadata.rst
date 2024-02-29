@@ -5,6 +5,7 @@ Setting metadata
 
 The **intorods** script can set metadata on collections that are successfully synchronized.
 The **-m** option allows you to set *static metadata* or *template metadata*.
+The **-M** option allows you to set *static metadata* or *template metadata* via a file.
 
 Setting static metadata
 -----------------------
@@ -14,6 +15,21 @@ Example of setting static metadata::
     intorods source_dir /demoZone/data/dest_coll -m attr1=value1 -m attr2=value2
 
 As shown in the example above, multiple **-m** options are allowed.
+
+Alternatively the **-M** option might be used::
+
+    intorods source_dir /demoZone/data/dest_coll -M my_metadata.json -m attr2=value4
+
+with the content of my_metadata.json::
+
+    {
+       attr1: "value1",
+       attr2: "value2",
+       attr3: "value3"
+    }
+ 
+
+In this example the  **-m** option takes precedence and will define the value used for attr2.
 
 
 Using templates in metadata

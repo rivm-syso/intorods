@@ -128,6 +128,16 @@ Metadata options
     It can be used multiple times, and it requires an **arg=value** parameter. 
     See for details the  :ref:`section on metadata <section-metadata>` 
 
+
+.. _option-M:
+
+``-M|--metadata-file``
+    This option can be used to specify a JSON file with additional metadata to add to a completely synchronized collection. 
+    It can be used alternatively to or in conjunction with the -m options. 
+    The format of the referenced JSON-file is a single object containing the "key": "value" pairs used as metadata.
+    If both -M and -m options are used, the -m option takes precedence.
+    See for details the  :ref:`section on metadata <section-metadata>` 
+
 Copy and compare options
 ------------------------
 
