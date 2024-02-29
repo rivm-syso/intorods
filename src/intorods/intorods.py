@@ -712,10 +712,11 @@ def main():
                 args.coll, os.path.basename(args.source_path))
         else:
             destination_coll = args.coll
+        checksum_file = os.path.realpath(args.checksum_file) if args.checksum_file else '' 
         replicate_single_folder(args.source_fs, source_options, 'irods', dest_options,
                                 args.source_path, destination_coll,
                                 compareChecksums=args.verify_checksums,
-                                checksumfile=args.checksum_file,
+                                checksumfile=checksum_file,
                                 checksumfileformat=args.checksum_file_format,
                                 checksumfileschema=args.checksum_file_schema,
                                 metadata=metadata,
