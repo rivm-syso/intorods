@@ -24,8 +24,8 @@ Checksum file parameter
 ----------------------
 
 The checksumfile path is handled differently depending on the presence of the search parameter.
-* When **search** is supplied, the checksum file path is supposed to be relative to the replicated source directory.
-* When **search** is not supplied, the checksum file path is handled as an absolute path, or a path relative to the working directory.
+* When **search** is supplied, the checksum file path is supposed to be relative to the replicated source directory. Absolute paths are not allowed in this case.
+* When **search** is not supplied, the checksum file path is supposed to be relative to the replicated directory, except when an absolute path is specified.
 
 Creating checksums in iRODS
 ---------------------------
