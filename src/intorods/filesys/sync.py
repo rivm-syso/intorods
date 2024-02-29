@@ -296,7 +296,7 @@ def queue_copyjobs_from_filelist(filelist, sourcepath, destfs, destpath, copy_jo
         if match:
             continue
         #
-        destfile = os.path.join(destpath, filename)
+        destfile = os.path.abspath(os.path.join(destpath, filename))
         destdir = os.path.dirname(destfile)
         # Create the destination directory, if non-existing
         if not destdir in dircache:
@@ -305,7 +305,7 @@ def queue_copyjobs_from_filelist(filelist, sourcepath, destfs, destpath, copy_jo
             dircache.append(destdir)
         # Add files to the copy queue
         src_filename = os.path.join(sourcepath, filename)
-        copy_jobs[src_filename] = (src_filename, os.path.join(destpath, filename),
+        copy_jobs[src_filename] = (src_filename, destfile,
                                    compareChecksums, filelist[filename])
         copy_counter += 1
     return copy_counter

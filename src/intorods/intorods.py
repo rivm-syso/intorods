@@ -81,15 +81,19 @@ def parse_extra_options(options):
     return outp
 
 
-def parse_checksum_file(fs_source, folder, checksumfile, file_format, json_schema):
+def parse_checksum_file(fs_source, folder, abs_or_rel_checksumfile, file_format, json_schema):
     """
         returns a dictionary, containing complete/path/to/file --> hash-value
         returns None to indicate to caller the checksumfile is missing / invalid, either abort or continue with next folder...
+        
     """
+    if not abs_or_rel_checksumfile.startswith('/'):
+        checksumfile = os.path.join(folder.path, abs_or_rel_checksumfile)
+    else:
+        checksumfile = abs_or_rel_checksumfile
     cslist = {}
     logger.debug('Searching checksums-file %s' % checksumfile)
-    checksumfilepattern = os.path.join(folder.path, checksumfile)
-    csfile_list = fs_source.glob(checksumfilepattern)
+    csfile_list = fs_source.glob(checksumfile)
     if not 1 == len(csfile_list):
         logger.debug('No definitive match of checksumfile found. Pattern: {} in folder: {}, matches: {}'.format(
             checksumfile, folder.path, len(csfile_list)))
@@ -104,8 +108,12 @@ def parse_checksum_file(fs_source, folder, checksumfile, file_format, json_schem
         logger.error('Checksumfile %s is not accessible' % checksumfilepath)
         return None
     #put also the samplesheet itself into the cslist for synchronization
-    csf_name = os.path.basename(checksumfilepath)
-    cslist[wintoux(csf_name)] = None
+    rel_csfile_name = os.path.relpath(checksumfilepath, start=folder.path)
+    #make check if the checksum file is in the source dir
+    # input: /dir1/dir2
+    # checksumfile /dir1/dir2/subdir/checksums
+    if not rel_csfile_name.startswith('..'):
+        cslist[wintoux(rel_csfile_name)] = None
     #depending on file format, change behavior....
     if file_format == FILE_FORMAT_TEXT:
         with csfile.open('r') as fh:
@@ -268,7 +276,7 @@ def replicate_data_folder(sfs_name, sfs_opts, dfs_name, dfs_opts,
 
         == Source selection parameters ==
         checksumfile: File path on source with checksums for all files
-            under <sourcepath>. Wildcards are allowed.
+            Wildcards are allowed.
         checksumfileformat: Format of checksum file, either:
             text: one line per file, consisting of cheksum and filename
             json: structured file following the jsonschema defined.
@@ -671,8 +679,11 @@ def main():
     # Using scan defaults to True if no filelist is specified.
     # This ensures backward compatibility
     scan = True if not args.checksum_file else args.scan
-
     if args.search:
+        # Check the checksumfile parameter. It cannot be an absolute path
+        if args.checksum_file and args.checksum_file.startswith('/'):
+            logger.error('Chksum file path cannot be an absolute path when --search parameter is supplied')
+            sys.exit(1)
         replicate_data_folder(args.source_fs, source_options, 'irods', dest_options,
                               args.source_path, args.coll,
                               compareChecksums=args.verify_checksums,
@@ -701,10 +712,11 @@ def main():
                 args.coll, os.path.basename(args.source_path))
         else:
             destination_coll = args.coll
+        checksum_file = os.path.realpath(args.checksum_file) if args.checksum_file else '' 
         replicate_single_folder(args.source_fs, source_options, 'irods', dest_options,
                                 args.source_path, destination_coll,
                                 compareChecksums=args.verify_checksums,
-                                checksumfile=args.checksum_file,
+                                checksumfile=checksum_file,
                                 checksumfileformat=args.checksum_file_format,
                                 checksumfileschema=args.checksum_file_schema,
                                 metadata=metadata,
