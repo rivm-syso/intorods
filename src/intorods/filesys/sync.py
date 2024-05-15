@@ -150,6 +150,7 @@ def sync_worker(process_id, q, sq, error_queue, sfs_name, sfs_opts, dfs_name, df
 def sync(sourcefs, sourcepath, destfs, destpath, sfs_name, sfs_opts, dfs_name, dfs_opts,
          compareChecksums=False, filelist={}, scan=False, worker_processes=1, excludelist=[],
          compare=True, minimum_age=0, cs_filters=[], scan_filters=[]):
+
     # Initialize MP
     job_queue = mp.Queue()
     error_queue = mp.Queue()
@@ -339,12 +340,12 @@ def queue_copyjobs(sourcefs, sourcebase, destfs, destbase, copy_jobs,
     # I guess only intorods knows what the base directory was sync is called for.
     #parentdir = sourcebase.split(os.sep)[-1]
 
-    for entry in sourcefs.lsdirnames(sourcepath):
+    for entry in sourcefs.lsdirnames(sourcepath, logger):
         relsubdir = os.path.join(relpath, entry)
         copy_counter += queue_copyjobs(sourcefs, sourcebase, destfs, destbase, copy_jobs,
                                        compareChecksums=compareChecksums, excludelist=excludelist, relpath=relsubdir, filter=filter)
 
-    for entry in sourcefs.lsfilenames(sourcepath):
+    for entry in sourcefs.lsfilenames(sourcepath, logger):
 
         relfilepath = os.path.join(relpath, entry)
         # Skip files that match one of the exclude patterns

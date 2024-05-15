@@ -167,21 +167,21 @@ class fs_base(ABC):
             del self.files[path]
 
     @abstractmethod
-    def ls(self, path):
+    def ls(self, path, logger=None):
         pass
 
-    def lsdirnames(self, path):
-        result = [a.shortname() for a in self.ls(path) if a.isdir()]
+    def lsdirnames(self, path, logger=None):
+        result = [a.shortname() for a in self.ls(path, logger) if a.isdir()]
         return result
 
-    def lsfilenames(self, path):
-        result = [a.shortname() for a in self.ls(path) if not a.isdir()]
+    def lsfilenames(self, path, logger=None):
+        result = [a.shortname() for a in self.ls(path, logger) if not a.isdir()]
         return result
 
-    def lsdirs(self, path, skip_inaccessible=False):
+    def lsdirs(self, path, skip_inaccessible=False, logger=None):
         if skip_inaccessible:
             result = [a for a in self.ls(
-                path, skip_inaccessible=True) if a.isdir() and a.accessible()]
+                path, skip_inaccessible=True, logger=logger) if a.isdir() and a.accessible()]
         else:
             result = [a for a in self.ls(path) if a.isdir()]
         return result

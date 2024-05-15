@@ -13,6 +13,7 @@ from datetime import datetime
 import ftputil
 
 from intorods.filesys.fs_base import factory, fs_base, fsobject_base
+import traceback
 
 
 class file_ftp(fsobject_base):
@@ -92,14 +93,17 @@ class fs_ftp(fs_base):
     def _getfile(self, path):
         return file_ftp(self, path)
 
-    def ls(self, path):
+    def ls(self, path, logger=None):
         result = []
         try:
             for file in self.ftp.listdir(path):
                 fullpath = os.path.join(path, file)
                 fileobject = self.getfile(fullpath)
                 result.append(fileobject)
-        except:
+        except Exception as e:
+            #print( traceback.format_exc() )
+            if logger:
+                logger.error( e )
             pass
         return result
 
