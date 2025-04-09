@@ -140,19 +140,17 @@ iRODS instance
     The **irods** source_fs needs the source_options for the iRODS instance:
 
     * resource=<dest resource>,
-    * use_ssl=<true|false>,
-    * host=<host>,
-    * user=<user>,
-    * password=<passwd>,
-    * zone=<zone>,
+    * authfile=<filename>,
     * timeout=<timeout>
 
     and a source_path, the path in the iRODS instance.
+
+    authfile is a custom irods_environment file. 
 
 example:
 
 .. code-block:: console
 
-    $ intorods -s irods -o resource='storageResc',use_ssl='true',host='server4.localhost',user='irodsuser',password='secret',zone='otherZone',timeout='180' '/otherZone/projects/myProject' '/demoZone/home/user/'
+    $ intorods -s irods -o resource='storageResc',authfile='my_irods_env.json',timeout='180' '/otherZone/projects/myProject' '/demoZone/home/user/'
 
 

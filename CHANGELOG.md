@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.14] - 2025-04-09
+
+- Change irods fs parameters to use only an irods environment file
+
 ## [0.0.13] - 2024-02-06
 
 - Correctly process a checksumfile when it is not in the source directory

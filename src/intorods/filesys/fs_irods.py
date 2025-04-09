@@ -13,6 +13,7 @@ import math
 import os
 import re
 import ssl
+import sys
 import time
 
 import irods.keywords as kw
@@ -116,13 +117,14 @@ class folder_irods(fsobject_base):
 
 
 class fs_irods(fs_base):
-    def __init__(self, resource='', use_ssl=False, host=None, user=None,
-                 zone=None, password=None, port=1247, timeout=None):
+    def __init__(self, resource='', timeout=None, authfile=None):
         super().__init__(supportsopen=True)
 
-        if host:
-            session_params = {'host': host, 'port': port, 'zone': zone,
-                              'user': user, 'password': password}
+        if authfile:
+            if not os.path.isfile(authfile):
+                logger.error(f'Authfile {authfile} not found')
+                sys.exit(1)
+            session_params = {'irods_env_file': authfile}
         else:
             try:
                 env_file = os.environ['IRODS_ENVIRONMENT_FILE']
@@ -131,16 +133,11 @@ class fs_irods(fs_base):
                     '~/.irods/irods_environment.json')
             session_params = {'irods_env_file': env_file}
 
-        if use_ssl:
-            context = ssl._create_unverified_context(purpose=ssl.Purpose.SERVER_AUTH,
-                                                     cafile=None, capath=None, cadata=None)
-            ssl_settings = {'irods_ssl_ca_certificate_file': '/etc/irods/ssl/irods.crt',
-                            'ssl_context': context}
-            self.irods_session = iRODSSession(**session_params, **ssl_settings)
-        else:
-            self.irods_session = iRODSSession(**session_params)
+
+        self.irods_session = iRODSSession(**session_params)
         if timeout:
             self.irods_session.connection_timeout = int(timeout)
+        self.irods_session.collections.get('/')
         self.resource = resource
 
     def cleanup(self):
@@ -163,6 +160,20 @@ class fs_irods(fs_base):
     def lsdirs(self, path, skip_inaccessible=False):
         logger.error("lsdirs not implemented")
         exit(2)
+
+    def lsdirnames(self, path):
+        q = self.irods_session.query(Collection).filter(
+            Criterion('=', Collection.parent_name, os.path.abspath(path))
+        )
+        result = [os.path.basename(r[Collection.name]) for r in q]
+        return result
+
+    def lsfilenames(self, path):
+        q = self.irods_session.query(DataObject).filter(
+            Criterion('=', Collection.name, os.path.abspath(path))
+        )
+        result = [r[DataObject.name] for r in q]
+        return result        
 
     @staticmethod
     def factory(**kwargs):
@@ -228,4 +239,4 @@ class fs_irods(fs_base):
 
 
 factory.register('irods', fs_irods.factory,
-                 'resource=<dest resource>,use_ssl=<true|false>,host=<host>,user=<user>,password=<passwd>,zone=<zone>,timeout=<timeout>')
+                 'resource=<dest resource>,timeout=<timeout>,authfile=<authfile>')

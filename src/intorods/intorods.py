@@ -581,7 +581,6 @@ def main():
     parser.add_argument('-d', '--irods_options', help='iRods options')
     parser.add_argument('-R', '--resource',
                         help='Destination resource', default='')
-    parser.add_argument('-S', '--ssl', help='Use SSL', action="store_true")
 
     # Source selection
     parser.add_argument('--search', help='Search for directories under the supplied path',
@@ -671,7 +670,7 @@ def main():
     metadata.update(dict(m.split('=') for m in args.metadata))
 
     dest_options = parse_extra_options(args.irods_options)
-    dest_options.update({'resource': args.resource, 'use_ssl': args.ssl})
+    dest_options.update({'resource': args.resource})
 
     timestamp_list = {opt.split('=')[0]: opt.split('=')[1]
                       for opt in args.timestamp_age}
