@@ -197,7 +197,7 @@ def resolve_meta_template(value, sourcefolder, destfolder):
     """
 
     for template, func in METADATA_TEMPLATE.items():
-        value = value.replace(template, func(sourcefolder, destfolder))
+        value = str(value).replace(template, func(sourcefolder, destfolder))
     return value
 
 
