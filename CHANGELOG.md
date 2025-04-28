@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.15] - 2025-04-28
+
+- Allow applying of numeric metadata values
+
 ## [0.0.14] - 2025-04-09
 
 - Change irods fs parameters to use only an irods environment file
