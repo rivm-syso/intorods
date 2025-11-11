@@ -92,15 +92,16 @@ class fs_ftp(fs_base):
     def _getfile(self, path):
         return file_ftp(self, path)
 
-    def ls(self, path):
+    def ls(self, path, skip_inaccessible=False):
         result = []
-        try:
-            for file in self.ftp.listdir(path):
-                fullpath = os.path.join(path, file)
+        for file in self.ftp.listdir(path):
+            fullpath = path + '/' + file
+            try:
                 fileobject = self.getfile(fullpath)
-                result.append(fileobject)
-        except:
-            pass
+            except Exception as e:
+                if not skip_inaccessible:
+                    raise e
+            result.append(fileobject)
         return result
 
     def mkdir(self, path, parents=False):

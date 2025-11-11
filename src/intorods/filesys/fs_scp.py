@@ -98,11 +98,15 @@ class fs_scp(fs_base):
     def _getfile(self, path):
         return file_scp(self, path)
 
-    def ls(self, path):
+    def ls(self, path, skip_inaccessible=False):
         result = []
         for file in self.sftp.listdir(path):
             fullpath = path + '/' + file
-            fileobject = self.getfile(fullpath)
+            try:
+                fileobject = self.getfile(fullpath)
+            except Exception as e:
+                if not skip_inaccessible:
+                    raise e
             result.append(fileobject)
         return result
 

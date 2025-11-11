@@ -167,7 +167,7 @@ class fs_base(ABC):
             del self.files[path]
 
     @abstractmethod
-    def ls(self, path):
+    def ls(self, path, skip_inaccessible=False):
         pass
 
     def lsdirnames(self, path):
