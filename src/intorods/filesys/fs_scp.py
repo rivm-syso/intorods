@@ -10,6 +10,7 @@ import os
 import re
 import stat
 import warnings
+import hashlib
 
 from cryptography.utils import CryptographyDeprecationWarning
 
@@ -17,7 +18,7 @@ with warnings.catch_warnings():
     warnings.filterwarnings('ignore', category=CryptographyDeprecationWarning)
     import paramiko
 
-from intorods.filesys.fs_base import factory, fs_base, fsobject_base
+from intorods.filesys.fs_base import factory, fs_base, fsobject_base, fopen
 
 
 def esc(mystr):
@@ -30,18 +31,15 @@ class file_scp(fsobject_base):
         self._lstat = self.fso.sftp.lstat(self.path)
 
     def calculate_checksum(self):
-        myhash = ""
-        try:
-            I = self.open("r")
-            myhash = I.check("sha256")
-        except IOError:
-            pass
-        if myhash == "":
-            command = 'sha256sum "' + esc(self.path) + '"  | cut -f 1 -d" " '
-            stdin, stdout, stderr = self.fso.ssh.exec_command(command)
-            out0 = stdout.read().splitlines()[0]
-            myhash = out0.decode().split("'")[0]
-        return myhash
+        BUF_SIZE = 1024 * 1024
+        sha256 = hashlib.sha256()
+        with fopen(self, 'r') as f:
+            while True:
+                data = f.read(BUF_SIZE)
+                if not data:
+                    break
+                sha256.update(data)
+        return sha256.hexdigest()
 
     def filesize(self):
         # return self.fso.sftp.lstat(self.path).st_size
