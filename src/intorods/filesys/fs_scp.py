@@ -62,6 +62,22 @@ class file_scp(fsobject_base):
     def isdir(self):
         return stat.S_ISDIR(self._lstat.st_mode)
 
+    def accessible(self):
+        if self.isdir():
+            try:
+                self.fso.sftp.listdir(self.path)
+            except:
+                return False
+            return True
+        else:
+            try:
+                fo = self.fso.sftp.file(self.path, "r")
+                if fo:
+                    return fo.readable()
+            except IOError:
+                return False
+        return False
+
 
 class fs_scp(fs_base):
     def __init__(self, hostname='', user='', private_key=None, public_key='', port=22):
