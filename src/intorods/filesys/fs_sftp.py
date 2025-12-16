@@ -115,15 +115,16 @@ class fs_sftp(fs_base):
     def _getfile(self, path):
         return file_sftp(self, path)
 
-    def ls(self, path):
+    def ls(self, path, skip_inaccessible=False):
         result = []
-        try:
-            for file in self.sftp.listdir(path):
-                fullpath = path + '/' + file
+        for file in self.sftp.listdir(path):
+            fullpath = path + '/' + file
+            try:
                 fileobject = self.getfile(fullpath)
-                result.append(fileobject)
-        except:
-            pass
+            except Exception as e:
+                if not skip_inaccessible:
+                    raise e
+            result.append(fileobject)
         return result
 
     def lsfilenames(self, path):

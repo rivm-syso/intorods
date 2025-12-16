@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.16] - 2025-12-16
+
+- Fix checksum calculation for scp
+- Add option skip_inaccessible to ls function
+- Add accessible function for fs_scp
+- Add missing import to __init__.py
+
 ## [0.0.15] - 2025-04-28
 
 - Allow applying of numeric metadata values

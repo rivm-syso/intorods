@@ -166,13 +166,18 @@ class fs_smb(fs_base):
     def open(self, path, mode):
         return None
 
-    def ls(self, path):
+    def ls(self, path, skip_inaccessible=False):
         result = []
         for entry in self.smb_conn.listPath(self.share, uxtowin(path)):
             fullpath = path + '/' + entry.filename
-            fileobject = self.getfile(fullpath)
+            try:
+                fileobject = self.getfile(fullpath)
+            except Exception as e:
+                if not skip_inaccessible:
+                    raise e
             result.append(fileobject)
         return result
+
 
 
 factory.register('smb', fs_smb.factory,
